@@ -2,9 +2,8 @@ package com.codecool.fileio;
 
 public interface OptionDialog {
 
-    String getInput();
+    String[] getInput();
 
-    void showProgress();
-
+    void showProgress(int percent);
 
 }
