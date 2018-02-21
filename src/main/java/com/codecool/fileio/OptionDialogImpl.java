@@ -13,6 +13,9 @@ public class OptionDialogImpl implements OptionDialog, ActionListener{
 
     JButton copyButton;
     JButton stopButton;
+    JFrame f;
+    Container content;
+    JProgressBar progressBar;
 
     @Override
     public String getInput() {
@@ -33,52 +36,49 @@ public class OptionDialogImpl implements OptionDialog, ActionListener{
         return "dupa";
     }
 
-    @Override
-    public void showProgress() {
-
-        JFrame f = new JFrame("Copying Progress");
+    public void createProgressBarWindow() {
+        f = new JFrame("Copying Progress");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Container content = f.getContentPane();
-
-        JProgressBar progressBar = new JProgressBar();
-        JProgressBar progressBar2 = new JProgressBar();
-
-        progressBar.setStringPainted(true);
-        progressBar2.setStringPainted(true);
-
-        Border border = BorderFactory.createTitledBorder("Copying...");
-
-        progressBar.setBorder(border);
-        progressBar2.setBorder(border);
+        content = f.getContentPane();
         JPanel subPanel = new JPanel();
-        JPanel subPanel2 = new JPanel();
 
-        subPanel2.add(progressBar);
-        subPanel2.add(progressBar2);
-        content.add(subPanel2, BorderLayout.NORTH);
 
-        JButton copyButton = new JButton("Copy");
+        copyButton = new JButton("Copy");
         copyButton.addActionListener(this);
         subPanel.add(copyButton);
 
-        JButton stopButton = new JButton("Stop");
+        stopButton = new JButton("Stop");
         stopButton.addActionListener(this);
         subPanel.add(stopButton);
 
         content.add(subPanel, BorderLayout.SOUTH);
 
-
         f.setSize(500, 200);
         f.setVisible(true);
+    }
+
+    public void createProgressBar() {
+
+        progressBar = new JProgressBar();
+
+        progressBar.setStringPainted(true);
+
+        Border border = BorderFactory.createTitledBorder("Copying...");
+
+        progressBar.setBorder(border);
+        JPanel subPanel = new JPanel();
+
+//        subPanel.add(progressBar);
+        content.add(progressBar, BorderLayout.NORTH);
+    }
+
+    @Override
+    public void showProgress() {
+
         for (int i = 0; i <= 100; i++) {
             final int percent = i;
             try {
-//                SwingUtilities.invokeLater(new Runnable() {
-//                    public void run() {
                         progressBar.setValue(percent);
-                        progressBar2.setValue(percent);
-//                    }
-//                });
                 Thread.sleep(100);
             } catch (InterruptedException e) {
             }
@@ -96,6 +96,13 @@ public class OptionDialogImpl implements OptionDialog, ActionListener{
         else {
             System.out.println("dupa");
         }
+    }
+
+    public static void main(String[] args) {
+        OptionDialogImpl optionDialog = new OptionDialogImpl();
+        optionDialog.createProgressBarWindow();
+        optionDialog.createProgressBar();
+        optionDialog.showProgress();
     }
 }
 
