@@ -97,10 +97,5 @@ public class OptionDialogImpl implements OptionDialog, ActionListener{
             System.out.println("dupa");
         }
     }
-    public static void main(String[] args) {
-        OptionDialogImpl optionDialog = new OptionDialogImpl();
-        optionDialog.getInput();
-        optionDialog.showProgress();
-    }
 }
 
