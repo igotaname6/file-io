@@ -23,6 +23,6 @@ public class FileIoApplication implements CommandLineRunner{
 
     @Override
     public void run(String... strings) throws Exception {
-        threadsController.toString();
+        System.out.println("dsaff");
     }
 }
