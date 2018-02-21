@@ -5,7 +5,11 @@ import java.io.*;
 public class CopierImp implements Copier{
 
     private int progress = 0;
-    private ProgressDisplayer shower = new ProgressDisplayer();
+    private ProgressDisplay display;
+
+    public CopierImp(ProgressDisplay display) {
+        this.display = display;
+    }
 
     @Override
     public void copy(String source, String destination) throws IOException {
@@ -19,12 +23,12 @@ public class CopierImp implements Copier{
 
             byte[] buffer = new byte[1024];
             int startCapacity = inStream.available();
-            shower.setAllBytes(startCapacity);
+            display.setAllBytes(startCapacity);
 
             int len;
             while ((len = inStream.read(buffer)) > 0){
                 outStream.write(buffer, 0, len);
-                shower.setBytesRemained(inStream.available());
+                display.setBytesRemained(inStream.available());
             }
 
         } finally {
@@ -41,7 +45,7 @@ public class CopierImp implements Copier{
     }
 
     @Override
-    public ProgressDisplayer getProgress(){
-        return shower;
+    public ProgressDisplay getProgress(){
+        return display;
     }
 }

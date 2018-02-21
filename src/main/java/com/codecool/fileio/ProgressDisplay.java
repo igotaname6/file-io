@@ -1,6 +1,6 @@
 package com.codecool.fileio;
 
-public class ProgressDisplayer {
+public class ProgressDisplay {
 
     private int bytesRemained;
     private int allBytes;
