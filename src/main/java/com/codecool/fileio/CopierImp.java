@@ -1,13 +1,14 @@
 package com.codecool.fileio;
 
+import javax.swing.*;
 import java.io.*;
 
 public class CopierImp implements Copier{
 
-    private ProgressDisplay display;
+    private JProgressBar bar;
 
-    public CopierImp(ProgressDisplay display) {
-        this.display = display;
+    public CopierImp(JProgressBar bar) {
+        this.bar = bar;
     }
 
     @Override
@@ -22,12 +23,10 @@ public class CopierImp implements Copier{
 
             byte[] buffer = new byte[1024];
             int startCapacity = inStream.available();
-            display.setAllBytes(startCapacity);
-
             int len;
             while ((len = inStream.read(buffer)) > 0){
                 outStream.write(buffer, 0, len);
-                display.setBytesRemained(inStream.available());
+                bar.setValue((startCapacity - inStream.available())/startCapacity * 100);
             }
 
         } finally {
@@ -41,10 +40,5 @@ public class CopierImp implements Copier{
     @Override
     public void stop() {
 
-    }
-
-    @Override
-    public ProgressDisplay getProgress(){
-        return display;
     }
 }

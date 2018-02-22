@@ -6,5 +6,4 @@ public interface Copier {
 
     public void copy(String source, String destination) throws IOException;
     public void stop();
-    public ProgressDisplay getProgress();
 }

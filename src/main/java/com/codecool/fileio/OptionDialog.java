@@ -1,9 +1,10 @@
 package com.codecool.fileio;
 
+import javax.swing.*;
+
 public interface OptionDialog {
 
     String[] getInput();
-
-    void showProgress(int percent);
-
+    void createProgressBarWindow();
+    JProgressBar createProgressBar();
 }
