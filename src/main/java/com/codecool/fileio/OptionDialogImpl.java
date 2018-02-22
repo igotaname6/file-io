@@ -7,16 +7,19 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class OptionDialogImpl implements OptionDialog, ActionListener{
 
-    JButton copyButton;
-    JButton stopButton;
-    JFrame f;
-    Container content;
-    JProgressBar progressBar;
+    private JButton copyButton;
+    private JButton stopButton;
+    private JFrame f;
+    private Container content;
+    private JPanel subPanel=new JPanel();
+    private List<JProgressBar> barList = new ArrayList<>();
+
 
     @Override
     public String[] getInput() {
@@ -38,6 +41,7 @@ public class OptionDialogImpl implements OptionDialog, ActionListener{
         return input;
     }
 
+    @Override
     public void createProgressBarWindow() {
         f = new JFrame("Copying Progress");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,27 +62,25 @@ public class OptionDialogImpl implements OptionDialog, ActionListener{
         f.setVisible(true);
     }
 
-    public void createProgressBar() {
+    @Override
+    public JProgressBar createProgressBar() {
 
-        progressBar = new JProgressBar();
-
+        if(content == null) {
+            createProgressBarWindow();
+        }
+        JProgressBar progressBar = new JProgressBar();
         progressBar.setStringPainted(true);
-
         Border border = BorderFactory.createTitledBorder("Copying...");
 
         progressBar.setBorder(border);
-//        JPanel subPanel = new JPanel();
 
-//        subPanel.add(progressBar);
-        content.add(progressBar, BorderLayout.NORTH);
+        subPanel.add(progressBar);
+
+        content.add(subPanel, BorderLayout.NORTH);
+        barList.add(progressBar);
+        return progressBar;
     }
 
-    @Override
-    public void showProgress(int percent) {
-
-        progressBar.setValue(percent);
-
-    }
 
     @Override
     public void actionPerformed(ActionEvent event) {
@@ -87,8 +89,16 @@ public class OptionDialogImpl implements OptionDialog, ActionListener{
             System.exit(0);
         }
         else {
-            System.out.println("dupa");
+            this.getInput();
         }
     }
+
+//    public static void main(String[] args) {
+//
+//        OptionDialogImpl optionDialog = new OptionDialogImpl();
+//        optionDialog.getInput();
+//
+//        optionDialog.showProgress(optionDialog.createProgressBar(), 0);
+//    }
 }
 
