@@ -4,7 +4,6 @@ import java.io.*;
 
 public class CopierImp implements Copier{
 
-    private int progress = 0;
     private ProgressDisplay display;
 
     public CopierImp(ProgressDisplay display) {
@@ -12,7 +11,7 @@ public class CopierImp implements Copier{
     }
 
     @Override
-    public void copy(String source, String destination) throws IOException {
+    public synchronized void copy(String source, String destination) throws IOException {
 
         InputStream inStream  = null;
         OutputStream outStream = null;
