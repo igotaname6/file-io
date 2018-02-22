@@ -19,25 +19,25 @@ public class OptionDialogImpl implements OptionDialog, ActionListener{
     private Container content;
     private JPanel subPanel=new JPanel();
     private List<JProgressBar> barList = new ArrayList<>();
+    private boolean inputIsTrue=false;
 
 
     @Override
     public String[] getInput() {
 
-        String[] input = new String[3];
+        String[] input = new String[2];
         JTextField fromField = new JTextField();
         JTextField toField = new JTextField();
-        JCheckBox overwriteOption = new JCheckBox("Overwrite?");
         Object[] message = {
                 "From: ", fromField,
                 "To: ", toField,
-                overwriteOption
         };
         int option = JOptionPane.showConfirmDialog(null, message, "Enter all your values", JOptionPane.OK_CANCEL_OPTION);
         if (option == JOptionPane.OK_OPTION) {
             input[0] = fromField.getText();
             input[1] = toField.getText();
         }
+        inputIsTrue = true;
         return input;
     }
 
@@ -58,7 +58,7 @@ public class OptionDialogImpl implements OptionDialog, ActionListener{
 
         content.add(subPanel, BorderLayout.SOUTH);
 
-        f.setSize(500, 200);
+        f.setSize(1500, 500);
         f.setVisible(true);
     }
 
@@ -89,16 +89,8 @@ public class OptionDialogImpl implements OptionDialog, ActionListener{
             System.exit(0);
         }
         else {
-            this.getInput();
+            new Thread(new CopyController(this)).run();
         }
     }
-
-//    public static void main(String[] args) {
-//
-//        OptionDialogImpl optionDialog = new OptionDialogImpl();
-//        optionDialog.getInput();
-//
-//        optionDialog.showProgress(optionDialog.createProgressBar(), 0);
-//    }
 }
 
