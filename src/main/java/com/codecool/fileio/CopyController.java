@@ -2,7 +2,7 @@ package com.codecool.fileio;
 
 import java.io.IOException;
 
-public class CopyController {
+public class CopyController implements Runnable {
 
     private Copier copier;
     private OptionDialog optionDialog;
@@ -12,7 +12,8 @@ public class CopyController {
         this.copier = new CopierImp(optionDialog.createProgressBar());
     }
 
-    public void start() {
+    public void run() {
+
         String[] paths = optionDialog.getInput();
         try {
             copier.copy(paths[0], paths[1]);
